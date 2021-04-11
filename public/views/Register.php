@@ -1,9 +1,12 @@
 <?php
 require_once __DIR__ . '/../../public/shared/Layout.php';
+require_once __DIR__ . '/../../public/shared/Alert.php';
+require_once __DIR__ . '/../../app/controllers/RegisterController.php';
 
 $layout = new Layout();
 $layout->PrintHead('Register');
-$layout->PrintHeaderNonAuth()
+$layout->PrintHeaderNonAuth();
+Alert::PrintAlert('registerMessage');
 ?>
 
 <div class="col-md-6 mt-5 mx-auto">
@@ -12,7 +15,7 @@ $layout->PrintHeaderNonAuth()
          <span class="fw-bold fs-2">Register</span>
       </div>
       <div class="card-body">
-         <form action="Register.php" enctype="multipart/form-data">
+         <form enctype="multipart/form-data" method="POST" action="../../app/controllers/RegisterController.php">
             <div class="row">
                <div class="col">
                   <div class="mb-3">
@@ -26,7 +29,7 @@ $layout->PrintHeaderNonAuth()
                   <div class="mb-3">
                      <label for="phone" class="form-label">Phone number</label>
                      <input type="tel" 
-                     pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}" 
+                     pattern="(809|829|849)-[0-9]{3}-[0-9]{4}" 
                      placeholder="xxx-xxx-xxxx" 
                      class="form-control" 
                      name="phone" 
@@ -34,7 +37,7 @@ $layout->PrintHeaderNonAuth()
                   </div>
                   <div class="mb-3">
                     <label for="profilePic" class="form-label">Profile picture</label>
-                    <input class="form-control" type="file" accept=".jpg,.png,.jpeg" name="profilePic" required>
+                    <input class="form-control" type="file" name="profilePic" required>
                   </div>
                </div>
                <div class="col">

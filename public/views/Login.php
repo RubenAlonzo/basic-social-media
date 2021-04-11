@@ -1,10 +1,8 @@
 <?php
 require_once __DIR__ . '/../../public/shared/Layout.php';
+require_once __DIR__ . '/../../public/shared/Alert.php';
 require_once __DIR__ . '/../../app/Utilities/authorization.php';
-
-
 require_once __DIR__ . '/../../app/database/DbContext.php';
-
 
 $isLoggedIn = Authorization::CheckAuthStatus();
 
@@ -13,15 +11,8 @@ if($isLoggedIn) header("location: basic-social-media/../../../public/views/home.
 $layout = new Layout();
 $layout->PrintHead('Login');
 $layout->PrintHeaderNonAuth();
+Alert::PrintAlert('loginMessage');
 ?>
-
-
-<?php if($_SESSION['authMessage']):?>
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-  <strong>Warning!</strong> <?= $_SESSION['authMessage'];?>.
-  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-<?php $_SESSION['authMessage'] = ''; endif;?>
 
 <div class="col-md-6 mt-5 mx-auto">
   <div class="card">

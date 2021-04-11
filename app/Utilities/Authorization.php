@@ -5,7 +5,7 @@ class Authorization{
   public static function Authorize($isRoot = false){
     $directoryUp = ($isRoot) ? '../' : "../../../";
     if (!$_SESSION['auth']) {
-      $_SESSION['authMessage'] = 'You must sign in to access this resource';
+      $_SESSION['loginMessage'] = ['You must sign in to access this resource', 'warning'];
       header("location: basic-social-media/{$directoryUp}public/views/login.php");
     }
   }
