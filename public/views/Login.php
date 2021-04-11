@@ -21,10 +21,10 @@ Alert::PrintAlert('loginMessage');
     </div>
     <div class="card-body">
 
-      <form>
+      <form method="POST" action="../../app/controllers/account/LoginController.php">
         <div class="mb-3">
-          <label for="email" class="form-label">Email address</label>
-          <input type="email" class="form-control" name="email" required>
+          <label for="userName" class="form-label">Username</label>
+          <input type="text" class="form-control" name="userName" required>
         </div>
         <div class="mb-3">
           <label for="password" class="form-label">Password</label>
@@ -33,8 +33,8 @@ Alert::PrintAlert('loginMessage');
         <button type="submit" class="btn btn-primary mb-3">Submit</button>
       </form>
 
+      <a href="./Register.php">Create an account</a>
       <a href="#" class="d-block">Forgot Password?</a>
-      <a href="#">Create an account</a>
     </div>
     <div class="card-footer text-muted">
       It's free!

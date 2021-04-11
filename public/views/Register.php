@@ -1,7 +1,6 @@
 <?php
 require_once __DIR__ . '/../../public/shared/Layout.php';
 require_once __DIR__ . '/../../public/shared/Alert.php';
-require_once __DIR__ . '/../../app/controllers/RegisterController.php';
 
 $layout = new Layout();
 $layout->PrintHead('Register');
@@ -15,7 +14,7 @@ Alert::PrintAlert('registerMessage');
          <span class="fw-bold fs-2">Register</span>
       </div>
       <div class="card-body">
-         <form enctype="multipart/form-data" method="POST" action="../../app/controllers/RegisterController.php">
+         <form enctype="multipart/form-data" method="POST" action="../../app/controllers/account/RegisterController.php">
             <div class="row">
                <div class="col">
                   <div class="mb-3">

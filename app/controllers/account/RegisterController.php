@@ -1,7 +1,7 @@
 <?php
-require_once __DIR__ . '/../services/models/UserModelService.php';
-require_once __DIR__ . '/../Utilities/Utils.php';
-require_once __DIR__ . '/../database/Config.php';
+require_once __DIR__ . '/../../services/models/UserModelService.php';
+require_once __DIR__ . '/../../Utilities/Utils.php';
+require_once __DIR__ . '/../../database/Config.php';
 
 session_start();
 
@@ -21,13 +21,13 @@ if(trim($_POST['firstName'])
   $user->Phone = trim($_POST['phone']);
   $user->Email = trim($_POST['email']);
   $user->Username = trim($_POST['userName']);
-  $user->Password = trim($_POST['password']);
+  $user->Password = trim($_POST['password']); // TODO: Encrypt password
   $user->IsEmailConfirmed = false;
   
   // Check if password fields are the same
   if ($user->Password != trim($_POST['confirmPassword'])) {
     $_SESSION['registerMessage'] = ['Passwords not matching, please confirm your password', 'danger'];
-    header('Location: ../../public/views/register.php');
+    header('Location: ../../../public/views/register.php');
   }
   else{
     $userModelService = new UserModelService();
@@ -36,7 +36,7 @@ if(trim($_POST['firstName'])
     $isUsernameValid = $userModelService->TryGetByUsername($user->Username) ? false : true; 
     if(!$isUsernameValid){
       $_SESSION['registerMessage'] = ['The username is already taken', 'danger'];
-      header('Location: ../../public/views/register.php');
+      header('Location: ../../../public/views/register.php');
     }
     else{
       // If inputs are valid and username is new, try to save the data
@@ -45,12 +45,12 @@ if(trim($_POST['firstName'])
       $result = $userModelService->Create($user);
       if($result){
         $_SESSION['loginMessage'] = ['Account created successfully!', 'success'];
-        header('Location: ../../public/views/login.php');
+        header('Location: ../../../public/views/login.php');
       }
       else{
         // If it gets here, something went wrong while inserting the data
         $_SESSION['registerMessage'] = ['Please make sure all fields are vaild', 'danger'];
-        header('Location: ../../public/views/register.php');
+        header('Location: ../../../public/views/register.php');
       }
     }
   }

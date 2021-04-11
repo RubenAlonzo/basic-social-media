@@ -48,7 +48,7 @@ EOF;
     <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Main navigation">
       <div class="container-fluid container-lefted my-2">
-        <a class="navbar-brand" href="#">Home</a>
+        <a class="navbar-brand" href="./Home.php">Home</a>
         <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="offcanvas" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -64,7 +64,7 @@ EOF;
               </li>
             </li>
           </ul>
-          <form class="d-flex">
+          <form class="d-flex" method="POST" action="../../app/controllers/account/LogoutController.php">
             <button class="btn btn-secondary" type="submit">Log out</button>
           </form>
         </div>
