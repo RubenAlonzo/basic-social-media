@@ -14,7 +14,7 @@ if(trim($_POST['textpost']) || $_FILES['photopost']){
 
   $post = new stdClass();
   $post->IdUser = $_SESSION['auth']->id_user;
-  if($img) $imageName = Utils::TryUploadImage($_FILES['photopost'], IMG_DATA_PATH . '/posts');
+  if($img) $imageName = Utils::TryUploadImage($_FILES['photopost'], IMG_POST_PATH);
    
   if(!$imageName){
     $_SESSION['homeMessage'] = ['Unsupported image file', 'warning'];

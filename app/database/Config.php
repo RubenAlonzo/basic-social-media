@@ -7,3 +7,5 @@ define("DB_NAME" , "social_media");
 define("DB_USER" , "usr2");
 define("DB_PASSWORD" , "root");
 define("IMG_DATA_PATH" , __DIR__ . '/../../public/assets/img');
+define("IMG_POST_PATH" , __DIR__ . '/../../public/assets/img/posts');
+define("IMG_PROFILE_PATH" , __DIR__ . '/../../public/assets/img/profile');

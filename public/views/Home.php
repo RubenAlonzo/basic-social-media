@@ -73,7 +73,7 @@ Alert::PrintAlert('homeMessage');
     <br>
     <h6 class="mb-0">Create a new Post</h6>
     <div class="d-flex text-muted pt-3">
-      <img src='<?='../assets/img/' . $currentUser->profile_pic?>' width="40px" height="40px" style="border-radius: 50%; margin-right: 1%" alt="img">
+      <img src='<?='../assets/img/profile/' . $currentUser->profile_pic?>' width="40px" height="40px" style="border-radius: 50%; margin-right: 1%" alt="img">
       <div class="form-floating col-md-10">
         <form action="../../app/controllers/home/NewPost.php" method="POST" enctype="multipart/form-data">
           <textarea class="form-control mb-3" rows="4" placeholder="Leave a comment here" name="textpost"></textarea>
