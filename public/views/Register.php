@@ -14,7 +14,7 @@ Alert::PrintAlert('registerMessage');
          <span class="fw-bold fs-2">Register</span>
       </div>
       <div class="card-body">
-         <form enctype="multipart/form-data" method="POST" action="../../app/controllers/account/RegisterController.php">
+         <form enctype="multipart/form-data" method="POST" action="../../app/controllers/account/Register.php">
             <div class="row">
                <div class="col">
                   <div class="mb-3">
@@ -36,7 +36,7 @@ Alert::PrintAlert('registerMessage');
                   </div>
                   <div class="mb-3">
                     <label for="profilePic" class="form-label">Profile picture</label>
-                    <input class="form-control" type="file" name="profilePic" required>
+                    <input class="form-control" type="file" accept=".jpg,.png,.jpeg" name="profilePic" required>
                   </div>
                </div>
                <div class="col">

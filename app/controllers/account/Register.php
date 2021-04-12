@@ -40,7 +40,7 @@ if(trim($_POST['firstName'])
     }
     else{
       // If inputs are valid and username is new, try to save the data
-      $profileName = Utils::TryUploadImage($user->Username, $_FILES['profilePic'], IMG_DATA_PATH);
+      $profileName = Utils::TryUploadImage($_FILES['profilePic'], IMG_DATA_PATH, $user->Username);
       $user->ProfilePic = $profileName ? $profileName : 'default.png';
       $result = $userModelService->Create($user);
       if($result){

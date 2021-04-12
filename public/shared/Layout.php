@@ -64,7 +64,7 @@ EOF;
               </li>
             </li>
           </ul>
-          <form class="d-flex" method="POST" action="../../app/controllers/account/LogoutController.php">
+          <form class="d-flex" method="POST" action="../../app/controllers/account/Logout.php">
             <button class="btn btn-secondary" type="submit">Log out</button>
           </form>
         </div>

@@ -1,16 +1,16 @@
 <?php
 class Utils{
 
-  public static function TryUploadImage($entityId, $photoInfo, $dir)
-  {
+  public static function TryUploadImage($photoInfo, $dir, $customFileName = ''){
     if(!isset($photoInfo) || $photoInfo['error'] == 4) return null;
    
+    $customFileName = $customFileName ? $customFileName : self::random_str(32);
     $fileExtention = str_replace('image/', '', $photoInfo['type']);
-    $fileName = "{$entityId}.{$fileExtention}";
+    $fileName = "{$customFileName}.{$fileExtention}";
     $size = $photoInfo['size'];
     $type = $photoInfo['type'];
     $tempFileName = $photoInfo['tmp_name'];
-    $repeatedFilesId = glob($dir . $entityId . '.*');
+    $repeatedFilesId = glob($dir . $customFileName . '.*');
 
     if(($size < 1000000) 
     && ($type == 'image/gif' 
@@ -23,7 +23,7 @@ class Utils{
       if(!file_exists($dir)) mkdir($dir, 0777, true);
       while ($repeatedFilesId) {
         if(file_exists($repeatedFilesId[0])) unlink($repeatedFilesId[0]);
-        $repeatedFilesId = glob($dir . $entityId . '.*');
+        $repeatedFilesId = glob($dir . $customFileName . '.*');
       }
 
       $isSuccess = move_uploaded_file($tempFileName, $dir .'/'.  $fileName);
@@ -33,4 +33,19 @@ class Utils{
       return null;
     }
   } 
+
+  public static function random_str(
+    $length = 64, 
+    $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'){
+      if ($length < 1) {
+        throw new \RangeException("Length must be a positive integer");
+    }
+    $pieces = [];
+    $max = mb_strlen($keyspace, '8bit') - 1;
+    for ($i = 0; $i < $length; ++$i) {
+        $pieces []= $keyspace[random_int(0, $max)];
+    }
+    return implode('', $pieces);
+  }
+
 }

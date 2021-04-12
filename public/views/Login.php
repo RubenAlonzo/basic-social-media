@@ -21,7 +21,7 @@ Alert::PrintAlert('loginMessage');
     </div>
     <div class="card-body">
 
-      <form method="POST" action="../../app/controllers/account/LoginController.php">
+      <form method="POST" action="../../app/controllers/account/Login.php">
         <div class="mb-3">
           <label for="userName" class="form-label">Username</label>
           <input type="text" class="form-control" name="userName" required>
