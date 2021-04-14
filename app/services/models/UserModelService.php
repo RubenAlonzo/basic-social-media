@@ -34,7 +34,8 @@ class UserModelService extends ModelServiceBase{
     $result = $query->get_result();
     $query->close();
 
-    if($result->num_rows === 0) return null;
+    if($result->num_rows === 0) return array();
+
     return $result->fetch_object();
   }
 }

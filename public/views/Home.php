@@ -1,12 +1,14 @@
 <?php
 require_once __DIR__ . '/../../public/shared/Layout.php';
 require_once __DIR__ . '/../../app/Utilities/authorization.php';
+require_once __DIR__ . '/../../app/services/models/PostModelService.php';
 require_once __DIR__ . '/../../app/database/Config.php';
 require_once __DIR__ . '/../../public/shared/Alert.php';
 
 Authorization::Authorize();
 $currentUser = $_SESSION['auth'];
 $layout = new Layout();
+$posts = new PostModelService();
 $layout->PrintHead();
 $layout->PrintHeaderAuth();
 Alert::PrintAlert('homeMessage');
@@ -83,6 +85,101 @@ Alert::PrintAlert('homeMessage');
       </div>
     </div>
   </div>
+
+  <div class="my-3 p-3 bg-body rounded shadow col-md-8">
+  <h4 class="pb-2 mb-0">Recent updates</h4>
+  </div>
+<?php foreach($posts->GetListByUserId($currentUser->id_user) as $userPost):?>
+
+<div class="my-3 p-3 bg-body rounded shadow col-md-8">
+  <small class="float-end lead fs-6"><?= $userPost->time_stamp?></small>
+  <div class="d-flex text-muted pt-3 col-md-10">
+    <title>Placeholder</title>
+    <img src='<?='../assets/img/profile/' . $currentUser->profile_pic?>' width="40px" height="40px" style="border-radius: 50%; margin-right: 1%" alt="img">
+    <p class="pb-3 mb-0 small lh-sm ">
+    <strong class="d-block text-gray-dark">@<?=$currentUser->username?></strong> 
+      <?= $userPost->text_content?>
+    </p>
+  </div>
+    <div class="border-bottom ms-5 pb-3">
+    <?php if($userPost->image_content):?>
+      <img src='<?='../assets/img/posts/' . $userPost->image_content?>' width="240px" height="240px" alt="img">
+    <?php endif?>
+    </div>
+  <div class="d-flex justify-content-start  mt-1 ms-5">
+    <a href="#">Reply</a>
+  </div>
+</div>
+
+<?php endforeach;?>
+
+<!-- official -->
+<div class="my-3 p-3 bg-body rounded shadow col-md-8">
+    <small class="float-end lead fs-5">15-02-2021</small>
+  <div class="d-flex text-muted pt-3 col-md-10">
+    <title>Placeholder</title>
+    <img src='<?='../assets/img/profile/' . $currentUser->profile_pic?>' width="40px" height="40px" style="border-radius: 50%; margin-right: 1%" alt="img">
+    <p class="pb-3 mb-0 small lh-sm ">
+    <strong class="d-block text-gray-dark">@<?=$currentUser->username?></strong> 
+    Lorem ipsum dolor sit, amet consectetur adipisicing elit. Aliquam dolor ut odio, vero iusto ipsum nesciunt saepe deserunt est deleniti, maxime labore unde eligendi autem itaque illo sint, beatae natus!
+    </p>
+  </div>
+  <div class="border-bottom ms-5 pb-3">
+    <img src='<?='../assets/img/profile/' . $currentUser->profile_pic?>' class="img-fluid" width="80%"  alt="img">
+  </div>
+  <div class="d-flex justify-content-start  mt-1 ms-5">
+  <a href="#">Reply</a>
+  </div>
+
+  <div class="ms-5 mt-4">
+    <small class="float-end lead fs-6">15-02-2021</small>
+  <div class="d-flex text-muted pt-3 col-md-10">
+    <title>Placeholder</title>
+    <img src='<?='../assets/img/profile/' . $currentUser->profile_pic?>' width="40px" height="40px" style="border-radius: 50%; margin-right: 1%" alt="img">
+    <p class="pb-3 mb-0 small lh-sm ">
+    <strong class="d-block text-gray-dark">@<?=$currentUser->username?></strong> 
+    Some representative placeholder content, with some information about this user. Imagine this being some sort of status update, perhaps?
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus, dolores! Vitae quibusdam voluptates, optio architecto incidunt neque porro consequatur dolor nobis impedit pariatur voluptatibus tempora omnis praesentium expedita sit esse!
+    </p>
+  </div>
+  <div class="border-bottom ms-5 pb-1">
+  </div>
+  <div class="d-flex justify-content-start  mt-1 ms-5">
+  <a href="#">Reply</a>
+  </div>
+
+  <div class="ms-5 mt-4">
+    <small class="float-end lead fs-6">15-02-2021</small>
+  <div class="d-flex text-muted pt-3 col-md-10">
+    <title>Placeholder</title>
+    <img src='<?='../assets/img/profile/' . $currentUser->profile_pic?>' width="40px" height="40px" style="border-radius: 50%; margin-right: 1%" alt="img">
+    <p class="pb-3 mb-0 small lh-sm ">
+    <strong class="d-block text-gray-dark">@<?=$currentUser->username?></strong> 
+    Some representative placeholder content, with some information about this user. Imagine this being some sort of status update, perhaps?
+    Lorem ipsum dolor sit amet consectetur adipisicing elit. Ducimus, dolores! Vitae quibusdam voluptates, optio architecto incidunt neque porro consequatur dolor nobis impedit pariatur voluptatibus tempora omnis praesentium expedita sit esse!
+    </p>
+  </div>
+  <div class="border-bottom ms-5 pb-1">
+  </div>
+  <div class="d-flex justify-content-start  mt-1 ms-5">
+  <a href="#">Reply</a>
+  </div>
+</div>
+
+</div>
+
+
+</div>
+
+<!-- official -->
+
+
+
+
+
+
+
+
 
   <div class="my-3 p-3 bg-body rounded shadow col-md-8">
     <h6 class="border-bottom pb-2 mb-0">Recent updates</h6>
