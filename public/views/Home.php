@@ -2,16 +2,19 @@
 require_once __DIR__ . '/../../public/shared/Layout.php';
 require_once __DIR__ . '/../../app/Utilities/authorization.php';
 require_once __DIR__ . '/../../app/services/models/PostModelService.php';
+require_once __DIR__ . '/../../app/services/models/FriendModelService.php';
 require_once __DIR__ . '/../../app/database/Config.php';
 require_once __DIR__ . '/../../public/shared/Alert.php';
 
 Authorization::Authorize();
-$currentUser = $_SESSION['auth'];
 $layout = new Layout();
 $posts = new PostModelService();
+$friend = new FriendModelService();
 $layout->PrintHead();
 $layout->PrintHeaderAuth();
 Alert::PrintAlert('homeMessage');
+$currentUser = $_SESSION['auth'];
+$friendIds = $friend->GetFriendsIdByUserId($currentUser->id_user);
 ?>
 
 <main class="container-lefted mt-5">
@@ -69,6 +72,31 @@ Alert::PrintAlert('homeMessage');
     </div>
   </div>
 
+  <!-- Reply Modal -->
+  <div class="modal fade" id="replyModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Reply</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+        <form action="../../app/controllers/home/NewPost.php" method="POST" enctype="multipart/form-data">
+          <div class="modal-body">
+            <input type="hidden" id="targetReply" name="repliedto" value="">
+            <input type="hidden" id="targetReplyType" name="repliedtype" value="">
+            <input type="hidden" id="parentPost" name="idpost" value="">
+            <textarea class="form-control mb-3" rows="4" placeholder="Leave a comment here" name="textreply"></textarea>
+            <input class="form-control form-control-sm mb-3" name="photoreply" accept=".jpg,.png,.jpeg" type="file">
+            </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary float-end">Publish</button>
+          </div>
+        </form>
+    </div>
+  </div>
+  </div>
+
   <!-- Create new posts secction -->
   <div class="my-3 p-3 bg-body rounded shadow col-md-8 ">
     <h3 class="border-bottom pb-2 mb-0">Welcome <?= $currentUser->first_name .' '. $currentUser->last_name ?>!</h3>
@@ -89,6 +117,7 @@ Alert::PrintAlert('homeMessage');
   <div class="my-3 p-3 bg-body rounded shadow col-md-8">
   <h4 class="pb-2 mb-0">Recent updates</h4>
   </div>
+
 <?php foreach($posts->GetListByUserId($currentUser->id_user) as $userPost):?>
 
 <div class="my-3 p-3 bg-body rounded shadow col-md-8">
@@ -107,7 +136,10 @@ Alert::PrintAlert('homeMessage');
     <?php endif?>
     </div>
   <div class="d-flex justify-content-start  mt-1 ms-5">
-    <a href="#">Reply</a>
+    <input type="hidden"  class="self-id" value='<?= $userPost->id_post?>'>
+    <input type="hidden"  class="self-type" value="post">
+    <input type="hidden"  class="parent-post" value="post">
+    <a class="replyBtn" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#replyModal" >Reply</a>
   </div>
 </div>
 

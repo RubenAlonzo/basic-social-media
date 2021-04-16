@@ -82,6 +82,8 @@ EOF;
       </div>
       </footer>
       <script src="{$this->directoryUp}assets/scripts/bootstrap/bootstrap.min.js"></script>
+      <script src="{$this->directoryUp}assets/scripts/jquery/jquery-3.5.1.min.js"></script>
+      <script src="{$this->directoryUp}assets/scripts/index.js"></script>
       </body>
   </html>
 EOF;

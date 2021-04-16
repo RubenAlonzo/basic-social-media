@@ -20,25 +20,16 @@ class PostModelService extends ModelServiceBase{
 
   public function GetListByUserId($id){
     $query = $this->db->prepare(
-      "SELECT * FROM  post WHERE $this->IdUser = ? order by time_stamp") or trigger_error($query->error, E_USER_WARNING);
+      "SELECT * FROM  post WHERE $this->IdUser = ? ORDER BY $this->Timestamp DESC") or trigger_error($query->error, E_USER_WARNING);
     $query->bind_param("i", $id);
     $query->execute() or trigger_error($query->error, E_USER_WARNING);
     $result = $query->get_result();
     $query->close();
 
     if($result->num_rows === 0) return null;
-    
     $postList = array();
-    while ($row = $result->fetch_array()) {
-
-      $post = new stdClass();
-      $post->id_post = $row[$this->IdPost];
-      $post->id_user = $row[$this->IdUser];
-      $post->text_content = $row[$this->TextContent];
-      $post->image_content = $row[$this->ImageContent];
-      $post->time_stamp = $row[$this->Timestamp];
-
-      array_push($postList, $post);
+    while ($row = $result->fetch_object()) {
+      array_push($postList, $row);
     }
     return $postList;
   }

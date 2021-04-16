@@ -38,4 +38,17 @@ class UserModelService extends ModelServiceBase{
 
     return $result->fetch_object();
   }
+
+  public function TryGetById($id){
+    $query = $this->db->prepare("SELECT * FROM user WHERE $this->Id = ?") or trigger_error($query->error, E_USER_WARNING);
+
+    $query->bind_param("i", $id);
+    $query->execute() or trigger_error($query->error, E_USER_WARNING);
+    $result = $query->get_result();
+    $query->close();
+
+    if($result->num_rows === 0) return array();
+
+    return $result->fetch_object();
+  }
 }
