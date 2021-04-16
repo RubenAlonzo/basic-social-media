@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../../services/models/UserModelService.php';
+require_once __DIR__ . '/../../services/MailService.php';
 require_once __DIR__ . '/../../Utilities/Utils.php';
 require_once __DIR__ . '/../../database/Config.php';
 
@@ -44,6 +45,8 @@ if(trim($_POST['firstName'])
       $user->ProfilePic = $profileName ? $profileName : 'default.png';
       $result = $userModelService->Create($user);
       if($result){
+        $mailer = new MailService();
+        $mailer->SendMail($user->Email, 'Email confirmation', "<p>Follow this link to confirm your account <a href='http://localhost/basic-social-media/'>Link</a></p>");
         $_SESSION['loginMessage'] = ['Account created successfully!', 'success'];
         header('Location: ../../../public/views/login.php');
       }
