@@ -1,14 +1,16 @@
 <?php
 require_once __DIR__ . '/../../public/shared/Layout.php';
-require_once __DIR__ . '/../../app/Utilities/authorization.php';
+require_once __DIR__ . '/../../public/shared/Alert.php';
+require_once __DIR__ . '/../../public/shared/Replier.php';
 require_once __DIR__ . '/../../app/services/models/PostModelService.php';
 require_once __DIR__ . '/../../app/services/models/ResponseModelService.php';
 require_once __DIR__ . '/../../app/services/models/UserModelService.php';
+require_once __DIR__ . '/../../app/Utilities/authorization.php';
 require_once __DIR__ . '/../../app/database/Config.php';
-require_once __DIR__ . '/../../public/shared/Alert.php';
 
 Authorization::Authorize();
 $layout = new Layout();
+$replier = new Replier();
 $postService = new PostModelService();
 $responseService = new ResponseModelService();
 $userService = new UserModelService();
@@ -168,31 +170,10 @@ $currentUser = $_SESSION['auth'];
 
 
         <!-- Start reply -->
-        <?php foreach($responseService->GetList($comment->id_comment, 'reply') as $reply):?>
-          <?php $replyer = $userService->TryGetById($reply->id_user);?>
 
-          <div class="ms-5 mt-4">
-            <small class="float-end lead fs-6"><?= $reply->time_stamp?></small>
-            <div class="d-flex text-muted pt-3 col-md-10">
-              <img src='<?='../assets/img/profile/' . $replyer->profile_pic?>' width="40px" height="40px" style="border-radius: 50%; margin-right: 1%" alt="img">
-              <p class="pb-3 mb-0 small lh-sm ">
-                <strong class="d-block text-gray-dark">@<?=$replyer->username?></strong> 
-                <?= $reply->text_content?>
-              </p>
-            </div>
-            <div class="border-bottom ms-5 pb-3">
-              <?php if($reply->image_content):?>
-              <img src='<?='../assets/img/posts/' . $reply->image_content?>' width="240px" height="240px" alt="img">
-              <?php endif?>
-            </div>
-            <div class="d-flex justify-content-start  mt-1 ms-5">
-              <input type="hidden"  class="response" value="reply">
-              <input type="hidden"  class="selfid" value='<?= $reply->id_reply?>'>
-              <a class="replyBtn" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#replyModal" >Reply</a>
-            </div>
-          </div>
+        <?php $replier->PrintReply($responseService->GetList($comment->id_comment, 'reply'))?>
 
-        <?php endforeach;?>
+   
         <!-- End reply -->
 
 

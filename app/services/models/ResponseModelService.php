@@ -50,4 +50,24 @@ class ResponseModelService extends ModelServiceBase{
     }
     return $postList;
   }
+
+  public function GetChildReply($childId){
+
+    $postList = array();
+
+    $query = $this->db->prepare(
+      "SELECT * FROM  reply WHERE id_reply = ? ORDER BY time_stamp ASC") or trigger_error($query->error, E_USER_WARNING);
+    $query->bind_param("i", $childId);
+    $query->execute() or trigger_error($query->error, E_USER_WARNING);
+    $result = $query->get_result();
+    $query->close();
+    
+    if($result->num_rows === 0) return null;
+    
+    while ($row = $result->fetch_object()) {
+      array_push($postList, $row);
+    }
+    
+    return $postList;
+  }
 }
