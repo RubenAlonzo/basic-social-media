@@ -42,10 +42,11 @@ if(trim($_POST['firstName'])
       // If inputs are valid and username is new, try to save the data
       $profileName = Utils::TryUploadImage($_FILES['profilePic'], IMG_PROFILE_PATH, $Username);
       $profileName = $profileName ? $profileName : 'default.png';
-      $result = $userModelService->Create($FirstName, $LastName, $Phone, $Email, $Username, $Password,$profileName, $IsEmailConfirmed);
+      $hash = md5(rand(0,1000));
+      $result = $userModelService->Create($FirstName, $LastName, $Phone, $Email, $Username, $Password,$profileName, $IsEmailConfirmed, $hash);
       if($result){
         $mailer = new MailService();
-        $mailer->SendMail($Email, 'Email confirmation', "<p>Follow this link to confirm your account <a href='http://localhost/basic-social-media/'>Link</a></p>");
+        $mailer->SendMail($Email, 'Email confirmation', "<p>Follow this link to confirm your account <a href='http://localhost/basic-social-media/app/controllers/account/ConfirmEmail.php?username={$Username}&hash={$hash}'>Link</a></p>");
         $_SESSION['loginMessage'] = ['Account created successfully!', 'success'];
         header('Location: ../../../public/views/login.php');
       }

@@ -46,7 +46,7 @@ Alert::PrintAlert('registerMessage');
                   </div>
                   <div class="mb-3">
                      <label for="userName" class="form-label">Username</label>
-                     <input type="text" class="form-control" name="userName" required>
+                     <input type="text" class="form-control" name="userName" onkeypress="return event.charCode != 32" required>
                   </div>
                   <div class="mb-3">
                      <label for="password" class="form-label">Password</label>
