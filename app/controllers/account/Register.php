@@ -15,18 +15,17 @@ if(trim($_POST['firstName'])
 && trim($_POST['password'])
 && trim($_POST['confirmPassword'])
 ){
-  $user = new stdClass();
 
-  $user->FirstName = trim($_POST['firstName']);
-  $user->LastName = trim($_POST['lastName']);
-  $user->Phone = trim($_POST['phone']);
-  $user->Email = trim($_POST['email']);
-  $user->Username = trim($_POST['userName']);
-  $user->Password = trim($_POST['password']); // TODO: Encrypt password
-  $user->IsEmailConfirmed = false;
+  $FirstName = trim($_POST['firstName']);
+  $LastName = trim($_POST['lastName']);
+  $Phone = trim($_POST['phone']);
+  $Email = trim($_POST['email']);
+  $Username = trim($_POST['userName']);
+  $Password = trim($_POST['password']); // TODO: Encrypt password
+  $IsEmailConfirmed = false;
   
   // Check if password fields are the same
-  if ($user->Password != trim($_POST['confirmPassword'])) {
+  if ($Password != trim($_POST['confirmPassword'])) {
     $_SESSION['registerMessage'] = ['Passwords not matching, please confirm your password', 'danger'];
     header('Location: ../../../public/views/register.php');
   }
@@ -34,19 +33,19 @@ if(trim($_POST['firstName'])
     $userModelService = new UserModelService();
    
     // Check if username already exists
-    $isUsernameValid = $userModelService->TryGetByUsername($user->Username) ? false : true; 
+    $isUsernameValid = $userModelService->TryGetByUsername($Username) ? false : true; 
     if(!$isUsernameValid){
       $_SESSION['registerMessage'] = ['The username is already taken', 'danger'];
       header('Location: ../../../public/views/register.php');
     }
     else{
       // If inputs are valid and username is new, try to save the data
-      $profileName = Utils::TryUploadImage($_FILES['profilePic'], IMG_PROFILE_PATH, $user->Username);
-      $user->ProfilePic = $profileName ? $profileName : 'default.png';
-      $result = $userModelService->Create($user);
+      $profileName = Utils::TryUploadImage($_FILES['profilePic'], IMG_PROFILE_PATH, $Username);
+      $profileName = $profileName ? $profileName : 'default.png';
+      $result = $userModelService->Create($FirstName, $LastName, $Phone, $Email, $Username, $Password,$profileName, $IsEmailConfirmed);
       if($result){
         $mailer = new MailService();
-        $mailer->SendMail($user->Email, 'Email confirmation', "<p>Follow this link to confirm your account <a href='http://localhost/basic-social-media/'>Link</a></p>");
+        $mailer->SendMail($Email, 'Email confirmation', "<p>Follow this link to confirm your account <a href='http://localhost/basic-social-media/'>Link</a></p>");
         $_SESSION['loginMessage'] = ['Account created successfully!', 'success'];
         header('Location: ../../../public/views/login.php');
       }

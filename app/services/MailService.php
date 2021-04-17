@@ -1,4 +1,5 @@
 <?php
+
 // Require the files from this one so when implementing just need to call this single file
 require_once __DIR__ . '/../vendor/phpMailer/Exception.php';
 require_once __DIR__ . '/../vendor/phpMailer/PHPMailer.php';
