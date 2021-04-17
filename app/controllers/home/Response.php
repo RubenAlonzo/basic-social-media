@@ -7,12 +7,14 @@ require_once __DIR__ . '/../../Utilities/Authorization.php';
 Authorization::Authorize(3);
 
 if((trim($_POST['textresponse']) || $_FILES['photoresponse']['error'] != 4)
-&& isset($_POST['parentid']) && isset($_POST['responsetype'])){
+&& isset($_POST['parentid']) 
+&& isset($_POST['postid'])){
   
   // Data
   $img = $_FILES['photoresponse'];
   $text = trim($_POST['textresponse']);
   $parentId = $_POST['parentid'];
+  $postId = $_POST['postid'];
   $responseType = $_POST['responsetype'];
   $userId =  $_SESSION['auth']->id_user;
 
@@ -29,7 +31,7 @@ if((trim($_POST['textresponse']) || $_FILES['photoresponse']['error'] != 4)
 
   if($proceedCreation){
     $creationService = new ResponseModelService();
-    $result = $creationService->Create($userId, $parentId, $text, $imageName, $responseType);
+    $result = $creationService->Create($userId, $postId, $parentId, $text, $imageName);
   }
   
   if($result){

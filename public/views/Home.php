@@ -85,7 +85,7 @@ $currentUser = $_SESSION['auth'];
         </div>
           <form action="../../app/controllers/home/Response.php" method="POST" enctype="multipart/form-data">
             <div class="modal-body">
-              <input type="hidden" id="responsetype" name="responsetype" value="">
+              <input type="hidden" id="postid" name="postid" value="">
               <input type="hidden" id="parentid" name="parentid" value="">
               <textarea class="form-control mb-3" rows="4" placeholder="Leave a comment here" name="textresponse"></textarea>
               <input class="form-control form-control-sm mb-3" name="photoresponse" accept=".jpg,.png,.jpeg" type="file">
@@ -139,48 +139,17 @@ $currentUser = $_SESSION['auth'];
     <?php endif?>
     </div>
   <div class="d-flex justify-content-start  mt-1 ms-5">
-    <input type="hidden"  class="response" value="comment">
-    <input type="hidden"  class="selfid" value='<?= $userPost->id_post?>'>
-    <a class="replyBtn" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#replyModal" >Reply</a>
+    <input type="hidden"  class="postid" value='<?= $userPost->id_post?>'>
+    <input type="hidden"  class="selfid" value='<?= 0?>'>
+    <a class="replyBtn" href="" data-bs-toggle="modal" data-bs-target="#replyModal" >Reply</a>
   </div>
 
-    <!-- Start comment -->
-    <?php foreach($responseService->GetList($userPost->id_post, 'comment') as $comment):?>
-      <?php $commenter = $userService->TryGetById($comment->id_user);?>
+    <!-- Start reply -->
 
-      <div class="ms-5 mt-4">
-        <small class="float-end lead fs-6"><?= $comment->time_stamp?></small>
-        <div class="d-flex text-muted pt-3 col-md-10">
-          <img src='<?='../assets/img/profile/' . $commenter->profile_pic?>' width="40px" height="40px" style="border-radius: 50%; margin-right: 1%" alt="img">
-          <p class="pb-3 mb-0 small lh-sm ">
-            <strong class="d-block text-gray-dark">@<?=$commenter->username?></strong> 
-            <?= $comment->text_content?>
-          </p>
-        </div>
-        <div class="border-bottom ms-5 pb-3">
-          <?php if($comment->image_content):?>
-          <img src='<?='../assets/img/posts/' . $comment->image_content?>' width="240px" height="240px" alt="img">
-          <?php endif?>
-        </div>
-        <div class="d-flex justify-content-start  mt-1 ms-5">
-          <input type="hidden"  class="response" value="reply">
-          <input type="hidden"  class="selfid" value='<?= $comment->id_comment?>'>
-          <a class="replyBtn" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#replyModal" >Reply</a>
-        </div>
+    <?php $replier->PrintReply($userPost->id_post)?>
 
 
-        <!-- Start reply -->
-
-        <?php $replier->PrintReply($responseService->GetList($comment->id_comment, 'reply'))?>
-
-   
-        <!-- End reply -->
-
-
-      </div>
-
-    <?php endforeach;?>
-    <!-- End Comment -->
+    <!-- End reply -->
 
 </div>
 

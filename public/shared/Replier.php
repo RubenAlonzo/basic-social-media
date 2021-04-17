@@ -13,11 +13,15 @@ class Replier{
     $this->userService = new UserModelService();
   }
 
-  public function PrintReply($replyList){
+  public function PrintReply($postId, $parentId = 0){
 
-    foreach($replyList as $reply){
+    $replies = $this->responseService->GetReplies($postId, $parentId);
+
+    foreach($replies as $reply){
 
       $replyer = $this->userService->TryGetById($reply->id_user);
+      if(!$replyer) return null;
+
 echo <<<EOF
       <div class="ms-5 mt-4">
       <small class="float-end lead fs-6">{$reply->time_stamp}</small>
@@ -36,15 +40,12 @@ EOF;
 echo <<<EOF
       </div>
       <div class="d-flex justify-content-start  mt-1 ms-5">
-      <input type="hidden"  class="response" value="reply">
+      <input type="hidden"  class="postid" value='{$postId}'>
       <input type="hidden"  class="selfid" value='{$reply->id_reply}'>
-      <a class="replyBtn" href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#replyModal" >Reply</a>
+      <a class="replyBtn" href="" data-bs-toggle="modal" data-bs-target="#replyModal" >Reply</a>
       </div>      
 EOF;
-      while($reply->child_reply != null){
-        $reply = $this->responseService->GetChildReply($reply->child_reply);
-        $this->PrintReply($reply);
-      }  
+      $this->PrintReply($postId, $reply->id_reply);
 echo '</div>';
     }
   }

@@ -1,10 +1,10 @@
 $( document ).ready(function() {
  
   $(".replyBtn").click(function () {
-    let response = $(this).siblings(".response").attr("value");
+    let postId = $(this).siblings(".postid").attr("value");
     let selfId = $(this).siblings(".selfid").attr("value");
 
-    $("#responsetype").val(response);
+    $("#postid").val(postId);
     $("#parentid").val(selfId);
   });
  
