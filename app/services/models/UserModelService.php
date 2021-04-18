@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . '/abstract/ModelServiceBase.php';
+require_once __DIR__ . '../../../Utilities/Utils.php';
+require_once __DIR__ . '../../../services/MailService.php';
 
 class UserModelService extends ModelServiceBase{
  
@@ -61,8 +63,7 @@ class UserModelService extends ModelServiceBase{
 
     if($result->num_rows === 0) return false;
 
-    $query = $this->db->prepare("UPDATE user SET email_confirmed = 1 WHERE (username = ?);
-    ")
+    $query = $this->db->prepare("UPDATE user SET email_confirmed = 1 WHERE (username = ?)")
     or trigger_error($query->error, E_USER_WARNING);
 
     $query->bind_param("s", $username);
@@ -70,6 +71,27 @@ class UserModelService extends ModelServiceBase{
     $query->execute() or trigger_error($query->error, E_USER_WARNING);
     $result = $query->get_result();
     $query->close();
+
+    return true;  
+  }
+
+  public function ResetPassword($username, $email){
+
+    $pwd = Utils::random_str(8);
+
+    $query = $this->db->prepare("UPDATE user SET password = ? WHERE (username = ?)")
+    or trigger_error($query->error, E_USER_WARNING);
+
+    $query->bind_param("ss", $pwd, $username);
+
+    $query->execute() or trigger_error($query->error, E_USER_WARNING);
+    $result = $query->affected_rows;
+    $query->close();
+
+    if(!$result) return false;
+
+    $mailer = new MailService();
+    $mailer->SendMail($email, 'Password reset', "<p>Use this password from now and on: <strong>{$pwd}</strong> <br /> <a href='http://localhost/basic-social-media/public/views/login.php'>Back to login</a></p>");
 
     return true;  
   }

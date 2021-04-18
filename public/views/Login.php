@@ -34,7 +34,7 @@ Alert::PrintAlert('loginMessage');
       </form>
 
       <a href="./Register.php">Create an account</a>
-      <a href="#" class="d-block">Forgot Password?</a>
+      <a class="d-block" href="" data-bs-toggle="modal" data-bs-target="#forgotpwd" >Forgot password?</a>
     </div>
     <div class="card-footer text-muted">
       It's free!
@@ -42,6 +42,31 @@ Alert::PrintAlert('loginMessage');
   </div>
 </div>
 
+
+
 <?php
 $layout->PrintFooter();
 ?>
+
+  <!-- Reply Modal -->
+  <div class="modal fade" id="forgotpwd" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Reset password account</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+          <form action="../../app/controllers/account/ForgotPassword.php" method="POST">
+            <div class="modal-body">
+              <div class="mb-3">
+                <label for="username" class="form-label">Enter your username account:</label>
+                <input type="text" class="form-control" name="username" required >
+              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary float-end">Publish</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div>
