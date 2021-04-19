@@ -48,7 +48,7 @@ Alert::PrintAlert('loginMessage');
 $layout->PrintFooter();
 ?>
 
-  <!-- Reply Modal -->
+  <!-- Reset password Modal -->
   <div class="modal fade" id="forgotpwd" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content">

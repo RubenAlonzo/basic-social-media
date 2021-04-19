@@ -43,7 +43,18 @@ EOF;
 EOF;
     }
 
-  public function PrintHeaderAuth(){
+  public function PrintHeaderAuth($page = ""){
+    switch ($page) {
+      case 'friends':
+        $friends = 'active';
+        break;
+      case 'events':
+        $events = 'active';
+        break;
+      case 'notifications':
+        $notifications = 'active';
+        break;
+    }
     echo <<<EOF
     <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Main navigation">
@@ -55,12 +66,12 @@ EOF;
         <div class="navbar-collapse offcanvas-collapse" id="navbarsExampleDefault">
           <ul class="navbar-nav me-auto mb-2 mb-lg-0">
             <li class="nav-item">
-              <a class="nav-link" aria-current="page" href="#">Friends</a>
+              <a class="nav-link {$friends}" href="./Friends.php">Friends</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">Events</a>
+              <a class="nav-link {$events}" href="#">Events</a>
               <li class="nav-item">
-                <a class="nav-link" href="#">Notifications <span class="badge bg-primary">4</span></a>
+                <a class="nav-link {$notifications}" href="#">Notifications <span class="badge bg-primary">4</span></a>
               </li>
             </li>
           </ul>

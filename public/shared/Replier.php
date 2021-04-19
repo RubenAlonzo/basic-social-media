@@ -52,7 +52,7 @@ EOF;
 if($reply->id_user == $this->currentUser->id_user){
 
 echo  "<a href='../../app/controllers/account/DeleteReply.php?id={$reply->id_reply}' class='text-danger me-2'>Delete</a>";
-echo  "<a data-bs-toggle='modal' data-bs-target='#replyModal' class='text-success'>Edit</a>";
+echo  "<a href='' data-bs-toggle='modal' data-bs-target='#editModal' class='text-success'>Edit</a>";
 }
 
 echo  '</div>'; 
