@@ -8,14 +8,13 @@ Authorization::Authorize(3);
 
 if((trim($_POST['textresponse']) || $_FILES['photoresponse']['error'] != 4)
 && isset($_POST['parentid']) 
-&& isset($_POST['postid'])){
+&& trim($_POST['postid'])){
   
   // Data
   $img = $_FILES['photoresponse'];
   $text = trim($_POST['textresponse']);
   $parentId = $_POST['parentid'];
   $postId = $_POST['postid'];
-  $responseType = $_POST['responsetype'];
   $userId =  $_SESSION['auth']->id_user;
 
   $imageName = null;

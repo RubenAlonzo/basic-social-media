@@ -2,15 +2,19 @@
 require_once __DIR__ . '/../../app/services/models/ResponseModelService.php';
 require_once __DIR__ . '/../../app/services/models/UserModelService.php';
 
+session_start();
+
 class Replier{
   private $directoryUp;
   private $responseService;
   private $userService;
+  private $currentUser;
 
   public function __construct($isRoot = false){
     $this->directoryUp = ($isRoot) ? "public/" : "../";
     $this->responseService = new ResponseModelService();
     $this->userService = new UserModelService();
+    $this->currentUser =  $_SESSION['auth'];
   }
 
   public function PrintReply($postId, $parentId = 0){
@@ -42,9 +46,16 @@ echo <<<EOF
       <div class="d-flex justify-content-start  mt-1 ms-5">
       <input type="hidden"  class="postid" value='{$postId}'>
       <input type="hidden"  class="selfid" value='{$reply->id_reply}'>
-      <a class="replyBtn" href="" data-bs-toggle="modal" data-bs-target="#replyModal" >Reply</a>
-      </div>      
+      <a class="actionBtn me-2" href="" data-bs-toggle="modal" data-bs-target="#replyModal" >Reply</a>
 EOF;
+
+if($reply->id_user == $this->currentUser->id_user){
+
+echo  "<a href='../../app/controllers/account/DeleteReply.php?id={$reply->id_reply}' class='text-danger me-2'>Delete</a>";
+echo  "<a data-bs-toggle='modal' data-bs-target='#replyModal' class='text-success'>Edit</a>";
+}
+
+echo  '</div>'; 
       $this->PrintReply($postId, $reply->id_reply);
 echo '</div>';
     }

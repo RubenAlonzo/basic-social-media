@@ -46,6 +46,30 @@ $currentUser = $_SESSION['auth'];
     </div>
   </div>
 
+  <!-- Edit Modal -->
+  <!-- <div class="modal fade" id="editModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Edit</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+          <form action="../../app/controllers/home/Response.php" method="POST" enctype="multipart/form-data">
+            <div class="modal-body">
+              <input type="hidden" id="postid" name="postid" value="">
+              <input type="hidden" id="parentid" name="parentid" value="">
+              <textarea class="form-control mb-3" rows="4" placeholder="Leave a comment here" name="textresponse"></textarea>
+              <input class="form-control form-control-sm mb-3" name="photoresponse" accept=".jpg,.png,.jpeg" type="file">
+              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary float-end">Publish</button>
+            </div>
+          </form>
+      </div>
+    </div>
+  </div> -->
+
   <!-- Create new posts secction -->
   <div class="my-3 p-3 bg-body rounded shadow col-md-8 ">
     <h3 class="border-bottom pb-2 mb-0">Welcome <?= $currentUser->first_name .' '. $currentUser->last_name ?>!</h3>
@@ -87,7 +111,11 @@ $currentUser = $_SESSION['auth'];
     <div class="d-flex justify-content-start  mt-1 ms-5">
       <input type="hidden"  class="postid" value='<?= $userPost->id_post?>'>
       <input type="hidden"  class="selfid" value='<?= 0?>'>
-      <a class="replyBtn" href="" data-bs-toggle="modal" data-bs-target="#replyModal" >Reply</a>
+      <a class="actionBtn me-2" href="" data-bs-toggle="modal" data-bs-target="#replyModal" >Reply</a>
+      <?php if($userPost->id_user == $currentUser->id_user):?>
+      <a href=<?='../../app/controllers/account/DeletePost.php?id='.$userPost->id_post?>  class="text-danger me-2">Delete</a>
+      <a href="" data-bs-toggle="modal" data-bs-target="#editModal" class="text-success">Edit</a>
+      <?php endif?>
     </div>
 
       <!-- Start reply -->

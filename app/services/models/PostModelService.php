@@ -1,5 +1,7 @@
 <?php
 require_once __DIR__ . '/abstract/ModelServiceBase.php';
+require_once __DIR__ . '../../../Utilities/Utils.php';
+require_once __DIR__ . '../../../database/Config.php';
 
 class PostModelService extends ModelServiceBase{
 
@@ -37,4 +39,20 @@ class PostModelService extends ModelServiceBase{
 
     return $postList;
   }
+
+  public function DeletePost($postId){
+
+    $this->RemoveImage($postId, 'post', 'id_post');
+
+    $query = $this->db->prepare(
+      "DELETE FROM post WHERE (id_post = ?)") 
+      or trigger_error($query->error, E_USER_WARNING);
+
+    $query->bind_param("i", $postId);
+    $result = $query->execute() or trigger_error($query->error, E_USER_WARNING);
+    $query->close();
+
+    return $result;
+  }
+
 }

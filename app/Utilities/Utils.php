@@ -34,6 +34,10 @@ class Utils{
     }
   } 
 
+  public static function DeleteFile($filepath){
+    if(file_exists($filepath)) unlink($filepath);
+  }
+
   public static function random_str(
     $length = 64, 
     $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'){
@@ -47,5 +51,4 @@ class Utils{
     }
     return implode('', $pieces);
   }
-
 }

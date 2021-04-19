@@ -41,4 +41,13 @@ class ResponseModelService extends ModelServiceBase{
     
     return $resulList;
   }
+
+  public function DeleteReply($replyId){
+    $childs = $this->TryGetListById('*', 'reply', 'id_parent', $replyId);    
+    foreach($childs as $child ){
+      $this->DeleteReply($child->id_reply);
+    }
+    $this->RemoveImage($replyId, 'reply', 'id_reply');
+    return $this->DeleteById('reply', 'id_reply', $replyId);
+  }
 }
