@@ -62,7 +62,7 @@ $currentUser = $_SESSION['auth'];
     <h4 class="pb-2 mb-0">Recent updates</h4>
   </div>
 
-  <?php $posts->PrintPosts($currentUser)?>
+  <?php $posts->PrintPosts($currentUser, 'Home')?>
 
 </main>
 

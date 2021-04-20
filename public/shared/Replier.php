@@ -17,7 +17,7 @@ class Replier{
     $this->currentUser =  $_SESSION['auth'];
   }
 
-  public function PrintReply($postId, $parentId = 0){
+  public function PrintReply($postId, $page, $parentId = 0){
 
     $replies = $this->responseService->GetReplies($postId, $parentId);
 
@@ -51,12 +51,12 @@ EOF;
 
 if($reply->id_user == $this->currentUser->id_user){
 
-echo "<a href='javascript:void(0)' data-id='{$reply->id_reply}' data-action='DeleteReply' class='text-danger me-2 link-delete'>Delete</a>";
-echo  "<a href='./Edit.php?id={$reply->id_reply}&type=reply' class='text-success'>Edit</a>";
+echo "<a href='javascript:void(0)' data-id='{$reply->id_reply}' data-page='{$page}' data-action='DeleteReply' class='text-danger me-2 link-delete'>Delete</a>";
+echo  "<a href='./Edit.php?id={$reply->id_reply}&type=reply&page={$page}' class='text-success'>Edit</a>";
 }
 
 echo  '</div>'; 
-      $this->PrintReply($postId, $reply->id_reply);
+      $this->PrintReply($postId, $page, $reply->id_reply);
 echo '</div>';
     }
   }

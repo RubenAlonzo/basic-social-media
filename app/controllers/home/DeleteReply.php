@@ -3,7 +3,7 @@ require_once __DIR__ . '/../../services/models/ResponseModelService.php';
 
 session_start();
 
-if(isset($_GET['id']) && trim($_GET['id'])){
+if(isset($_GET['id']) && trim($_GET['id']) && isset($_GET['page'])){
 
   $id = trim($_GET['id']);
 
@@ -16,4 +16,4 @@ if(isset($_GET['id']) && trim($_GET['id'])){
     $_SESSION['homeMessage'] = ['There was an error with your request', 'danger'];
   
 }
-header('Location: ../../../public/views/home.php');
+header("Location: ../../../public/views/". $_GET['page'] . ".php");

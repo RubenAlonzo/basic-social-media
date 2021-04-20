@@ -17,7 +17,7 @@ class Posts{
     $this->replier = new Replier();
   }
 
-  public function PrintPosts($currentUser){
+  public function PrintPosts($currentUser, $page){
 
     foreach($this->postService->GetListByUserId($currentUser->id_user) as $userPost){
 
@@ -47,11 +47,11 @@ echo <<<EOF
         <a class="actionBtn me-2" href="" data-bs-toggle="modal" data-bs-target="#replyModal" >Reply</a>
 EOF;
         if($userPost->id_user == $currentUser->id_user){
-          echo "<a href='javascript:void(0)' data-id='{$userPost->id_post}' data-action='DeletePost' class='text-danger me-2 link-delete'>Delete</a>";
-          echo "<a href='./Edit.php?id={$userPost->id_post}&type=post' class='text-success'>Edit</a>";
+          echo "<a href='javascript:void(0)' data-id='{$userPost->id_post}' data-page='{$page}' data-action='DeletePost' class='text-danger me-2 link-delete'>Delete</a>";
+          echo "<a href='./Edit.php?id={$userPost->id_post}&type=post&page={$page}' class='text-success'>Edit</a>";
         }
         echo '</div>';
-        $this->replier->PrintReply($userPost->id_post);
+        $this->replier->PrintReply($userPost->id_post, $page);
         echo "</div>";
     }
   }

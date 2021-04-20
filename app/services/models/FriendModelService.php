@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/abstract/ModelServiceBase.php';
+require_once __DIR__ . '/UserModelService.php';
 
 class FriendModelService extends ModelServiceBase{
 
@@ -23,5 +24,21 @@ class FriendModelService extends ModelServiceBase{
       array_push($friendIdList, $friendId);
     }
     return $friendIdList;
+  }
+
+  public function TryGetFriendsById($id){
+    $friendIds = $this->GetFriendsIdByUserId($id);
+    
+    if(!$friendIds) return array();
+
+    $friends = array();
+    $userService = new UserModelService();
+
+    foreach($friendIds as $id){
+      $friend = $userService->TryGetById($id);
+      if($friend) array_push($friends, $friend);
+    }
+
+    return $friends;
   }
 }
