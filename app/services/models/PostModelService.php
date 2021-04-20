@@ -40,6 +40,21 @@ class PostModelService extends ModelServiceBase{
     return $postList;
   }
 
+  public function TryGetValuesById($postId){
+    $result =  $this->TryGetListById('*', 'post', 'id_post', $postId);
+    return (isset($result[0])) ? $result[0] : null; 
+  }
+
+  public function UpdateContent($id, $newText, $newImage, $previousImageName){
+    $result = $this->UpdateFieldById('post', 'text_content', $newText, 'id_post', $id);
+    if($newImage && $newImage['error'] != 4 && $result){
+      Utils::DeleteFile(IMG_POST_PATH . '/' . $previousImageName);
+      $newImageName = Utils::TryUploadImage($newImage, IMG_POST_PATH);
+      $result = $this->UpdateFieldById('post', 'image_content', $newImageName, 'id_post', $id);
+    } 
+    return $result;
+  }
+
   public function DeletePost($postId){
 
     $this->RemoveImage($postId, 'post', 'id_post');
@@ -54,5 +69,7 @@ class PostModelService extends ModelServiceBase{
 
     return $result;
   }
+
+
 
 }

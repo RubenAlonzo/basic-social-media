@@ -8,4 +8,12 @@ $( document ).ready(function() {
     $("#parentid").val(selfId);
   });
  
+  $(".link-delete").on("click",function(){
+    let id = $(this).data("id");
+    let action = $(this).data("action");
+    let proceedDeleting = confirm("Are you sure you want to delete it?");
+    if(proceedDeleting && id) window.location.href = "../../app/controllers/home/" + action + ".php?id=" + id;
+  }); 
 });
+
+

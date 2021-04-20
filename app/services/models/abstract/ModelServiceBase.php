@@ -74,4 +74,14 @@ abstract class ModelServiceBase{
     $query->close();
     return $result;
   }
+
+  protected function UpdateFieldById($table, $fielToChange, $newValue, $refCol, $id){
+    $query = $this->db->prepare(
+      "UPDATE {$table} SET {$fielToChange} = ? WHERE ({$refCol} = ?)") 
+      or trigger_error($query->error, E_USER_WARNING);
+    $query->bind_param("si", $newValue, $id);
+    $result = $query->execute() or trigger_error($query->error, E_USER_WARNING);
+    $query->close();
+    return $result;
+  }
 }

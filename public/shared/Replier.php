@@ -51,8 +51,8 @@ EOF;
 
 if($reply->id_user == $this->currentUser->id_user){
 
-echo  "<a href='../../app/controllers/account/DeleteReply.php?id={$reply->id_reply}' class='text-danger me-2'>Delete</a>";
-echo  "<a href='' data-bs-toggle='modal' data-bs-target='#editModal' class='text-success'>Edit</a>";
+echo "<a href='javascript:void(0)' data-id='{$reply->id_reply}' data-action='DeleteReply' class='text-danger me-2 link-delete'>Delete</a>";
+echo  "<a href='./Edit.php?id={$reply->id_reply}&type=reply' class='text-success'>Edit</a>";
 }
 
 echo  '</div>'; 

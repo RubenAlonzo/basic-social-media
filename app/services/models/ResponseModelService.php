@@ -42,6 +42,21 @@ class ResponseModelService extends ModelServiceBase{
     return $resulList;
   }
 
+  public function UpdateContent($id, $newText, $newImage, $previousImageName){
+    $result = $this->UpdateFieldById('reply', 'text_content', $newText, 'id_reply', $id);
+    if($newImage && $newImage['error'] != 4 && $result){
+      Utils::DeleteFile(IMG_POST_PATH . '/' . $previousImageName);
+      $newImageName = Utils::TryUploadImage($newImage, IMG_POST_PATH);
+      $result = $this->UpdateFieldById('reply', 'image_content', $newImageName, 'id_reply', $id);
+    } 
+    return $result;
+  }
+
+  public function TryGetValuesById($replyId){
+    $result =  $this->TryGetListById('*', 'reply', 'id_reply', $replyId);
+    return (isset($result[0])) ? $result[0] : null; 
+  }
+
   public function DeleteReply($replyId){
     $childs = $this->TryGetListById('*', 'reply', 'id_parent', $replyId);    
     foreach($childs as $child ){
