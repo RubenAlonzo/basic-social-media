@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/abstract/ModelServiceBase.php';
 require_once __DIR__ . '/UserModelService.php';
+require_once __DIR__ . '../../../Utilities/Utils.php';
 
 class FriendModelService extends ModelServiceBase{
 
@@ -25,20 +26,36 @@ class FriendModelService extends ModelServiceBase{
     }
     return $friendIdList;
   }
-
+  
   public function TryGetFriendsById($id){
     $friendIds = $this->GetFriendsIdByUserId($id);
     
     if(!$friendIds) return array();
-
+    
     $friends = array();
     $userService = new UserModelService();
-
+    
     foreach($friendIds as $id){
       $friend = $userService->TryGetById($id);
       if($friend) array_push($friends, $friend);
     }
-
+    
     return $friends;
   }
+  
+    public function SendFriendRequest($sender, $receiver){
+      $order = Utils::SortOrder($sender, $receiver);
+      
+      $query = $this->db->prepare(
+        "INSERT INTO friend (id_user_one, id_user_two, status, id_last_user_action)
+        VALUES (?, ?, 0, ?)") 
+        or trigger_error($query->error, E_USER_WARNING);
+  
+      $query->bind_param("iii", $order[0], $order[1], $order[0]);
+  
+      $query->execute() or trigger_error($query->error, E_USER_WARNING);
+      $result = $query->get_result();
+      $query->close();
+      return $result;
+    }
 }

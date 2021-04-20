@@ -53,14 +53,15 @@ $friends = $friendsService->TryGetFriendsById($currentUser->id_user);
 
 
 <div class="position-fixed bottom-0 end-0 me-3 p-2 border border-info rounded">
-  <h4 class="lead text-secondary fw-bolder">Friend list</h4>
-  <form action="">
+  <h4 class="lead text-secondary fw-bolder">Add a new friend</h4>
+  <form action="../../app/controllers/friends/AddFriend.php" method="POST">
     <div class="input-group mb-4">
-      <input type="text" required class="form-control" placeholder="Add a new friend">
+      <input type="text" required class="form-control" name='username' placeholder="username">
       <button class="input-group-text btn btn-outline-success" type="submit"><i class="bi bi-person-plus"></i></button>
     </div>
   </form>
 
+  <h4 class="lead text-secondary fw-bolder">Friend list</h4>
   <?php if(!$friends):?>
     <h4 class="lead text-center text-danger">Add some friends!</h4>
   <?php else:?>
@@ -71,14 +72,6 @@ $friends = $friendsService->TryGetFriendsById($currentUser->id_user);
           <?= $friend->first_name?> <?= $friend->last_name?> 
           <strong class="d-block text-gray-dark">@<?= $friend->username?></strong>  
         </li>
-<!--           
-        <li class="list-group-item"><a href="#"><i class="text-danger bi bi-trash-fill"></i></a> Maria Antonia Beltre Reyes<strong class="d-block text-gray-dark">@Lamari</strong>  </li>
-        <li class="list-group-item"><a href="#"><i class="text-danger bi bi-trash-fill"></i></a> Esteban Alcantara<strong class="d-block text-gray-dark">@TokioGul</strong>  </li>
-        <li class="list-group-item"><a href="#"><i class="text-danger bi bi-trash-fill"></i></a> Ruben Alonzo <strong class="d-block text-gray-dark">@LaFiera24</strong>  </li>
-        <li class="list-group-item"><a href="#"><i class="text-danger bi bi-trash-fill"></i></a> Ruben Alonzo <strong class="d-block text-gray-dark">@LaFiera24</strong>  </li>
-        <li class="list-group-item"><a href="#"><i class="text-danger bi bi-trash-fill"></i></a> Maria Antonia Beltre Reyes<strong class="d-block text-gray-dark">@Lamari</strong>  </li>
-        <li class="list-group-item"><a href="#"><i class="text-danger bi bi-trash-fill"></i></a> Esteban Alcantara<strong class="d-block text-gray-dark">@TokioGul</strong>  </li>
-        <li class="list-group-item"><a href="#"><i class="text-danger bi bi-trash-fill"></i></a> Esteban Alcantara<strong class="d-block text-gray-dark">@TokioGul</strong>  </li> -->
       </ul>
     <?php endforeach?>
   <?php endif?>

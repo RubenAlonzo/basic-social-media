@@ -38,6 +38,19 @@ class Utils{
     if(file_exists($filepath)) unlink($filepath);
   }
 
+  public static function SortOrder($a, $b){
+    $ordered = array();
+    if($a < $b){
+      array_push($ordered, $a);
+      array_push($ordered, $b);
+    }
+    else{
+      array_push($ordered, $b);
+      array_push($ordered, $a);
+    }
+    return $ordered;
+  }
+
   public static function random_str(
     $length = 64, 
     $keyspace = '0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ'){
