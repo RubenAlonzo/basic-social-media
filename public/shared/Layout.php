@@ -1,4 +1,6 @@
 <?php
+require_once __DIR__ . '/../../app/services/models/FriendModelService.php';
+
 class Layout{
   private $directoryUp;
 
@@ -55,6 +57,10 @@ EOF;
         $notifications = 'active';
         break;
     }
+    $friendsService = new FriendModelService();
+    $requestsCount = count($friendsService->GetPendingRequests($_SESSION['auth']->id_user));
+    $requestsCount = $requestsCount ? $requestsCount : '';
+
     echo <<<EOF
     <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Main navigation">
@@ -71,7 +77,7 @@ EOF;
             <li class="nav-item">
               <a class="nav-link {$events}" href="#">Events</a>
               <li class="nav-item">
-                <a class="nav-link {$notifications}" href="#">Notifications <span class="badge bg-primary">4</span></a>
+                <a class="nav-link {$notifications}" href="./Notifications.php">Notifications <span class="badge bg-primary">{$requestsCount}</span></a>
               </li>
             </li>
           </ul>
