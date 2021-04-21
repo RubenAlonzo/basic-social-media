@@ -107,4 +107,34 @@ class FriendModelService extends ModelServiceBase{
     $query->close();
     return $result;
   }
+
+  public function AcceptRequest($sender, $receiver){
+    $order = Utils::SortOrder($sender, $receiver);
+    
+    $query = $this->db->prepare(
+      "UPDATE friend SET status = 1, id_last_user_action = ? WHERE (id_user_one = ? AND id_user_two = ?)") 
+      or trigger_error($query->error, E_USER_WARNING);
+
+    $query->bind_param("iii", $receiver, $order[0], $order[1]);
+
+    $query->execute() or trigger_error($query->error, E_USER_WARNING);
+    $result = $query->get_result();
+    $query->close();
+    return $result;
+  }
+
+  public function DeclineRequest($sender, $receiver){
+    $order = Utils::SortOrder($sender, $receiver);
+    
+    $query = $this->db->prepare(
+      "DELETE FROM friend WHERE (id_user_one = ? AND id_user_two = ?)") 
+      or trigger_error($query->error, E_USER_WARNING);
+
+    $query->bind_param("ii", $order[0], $order[1]);
+
+    $query->execute() or trigger_error($query->error, E_USER_WARNING);
+    $result = $query->get_result();
+    $query->close();
+    return $result;
+  }
 }
