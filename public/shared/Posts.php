@@ -43,7 +43,8 @@ echo <<<EOF
         </div>
       <div class="d-flex justify-content-start  mt-1 ms-5">
         <input type="hidden"  class="postid" value='{$userPost->id_post}'>
-        <input type="hidden"  class="selfid" value='<?= 0?>'>
+        <input type="hidden"  class="selfid" value='0'>
+        <input type="hidden"  class="page" value='{$page}'>
         <a class="actionBtn me-2" href="" data-bs-toggle="modal" data-bs-target="#replyModal" >Reply</a>
 EOF;
         if($userPost->id_user == $currentUser->id_user){

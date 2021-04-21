@@ -40,4 +40,7 @@ if(trim($_POST['textpost']) || $_FILES['photopost']['error'] != 4){
     }
   }
 }
-header('Location: ../../../public/views/home.php');
+if(isset($_GET['page'])) 
+  header("Location: ../../../public/views/". $_GET['page'] . ".php");
+else
+  header('Location: ../../../public/views/home.php');

@@ -46,6 +46,7 @@ echo <<<EOF
       <div class="d-flex justify-content-start  mt-1 ms-5">
       <input type="hidden"  class="postid" value='{$postId}'>
       <input type="hidden"  class="selfid" value='{$reply->id_reply}'>
+      <input type="hidden"  class="page" value='{$page}'>
       <a class="actionBtn me-2" href="" data-bs-toggle="modal" data-bs-target="#replyModal" >Reply</a>
 EOF;
 

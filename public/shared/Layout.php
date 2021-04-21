@@ -65,7 +65,7 @@ EOF;
     <header>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark" aria-label="Main navigation">
       <div class="container-fluid container-lefted my-2">
-        <a class="navbar-brand" href="./Home.php">Home</a>
+        <a class="navbar-brand fw-bold" href="./Home.php">Home</a>
         <button class="navbar-toggler p-0 border-0" type="button" data-bs-toggle="offcanvas" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -75,7 +75,7 @@ EOF;
               <a class="nav-link {$friends}" href="./Friends.php">Friends</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link {$events}" href="#">Events</a>
+              <a class="nav-link {$events}" href="./EventInvitations.php">Events</a>
               <li class="nav-item">
                 <a class="nav-link {$notifications}" href="./Notifications.php">Notifications <span class="badge bg-primary">{$requestsCount}</span></a>
               </li>
@@ -88,6 +88,31 @@ EOF;
       </div>
     </nav>
   </header>
+EOF;
+    }
+
+  public function PrintEventsTabs($page = ""){
+    switch ($page) {
+      case 'invitations':
+        $invitations = 'active';
+        break;
+      case 'myevents':
+        $myevents = 'active';
+        break;
+    }
+
+    echo <<<EOF
+  
+    <div class="container-lefted mt-5">
+    <ul class="nav nav-tabs">
+    <li class="nav-item">
+    <a class="nav-link {$invitations}" href="./EventInvitations.php">Invitations</a>
+    </li>
+      <li class="nav-item">
+      <a class="nav-link {$myevents}" href="./MyEvents.php">My events</a>
+      </li>
+      </ul>
+      </div>
 EOF;
     }
     

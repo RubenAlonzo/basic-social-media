@@ -14,8 +14,8 @@ $layout->PrintHeaderNonAuth();
 Alert::PrintAlert('loginMessage');
 ?>
 
-<div class="col-md-6 mt-5 mx-auto">
-  <div class="card">
+<div class="col-md-6 col-xl-3 mt-5 mx-auto">
+  <div class="card shadow">
     <div class="card-header">
       <span class="fw-bold fs-2">Log in</span>
     </div>
@@ -30,11 +30,15 @@ Alert::PrintAlert('loginMessage');
           <label for="password" class="form-label">Password</label>
           <input type="password" class="form-control" name="password" required>
         </div>
-        <button type="submit" class="btn btn-primary mb-3">Submit</button>
+        <div class="d-grid gap-2 col-md-3 mx-auto mt-4">
+          <button type="submit" class="btn btn-primary mb-3">Submit</button>
+        </div>
       </form>
-
-      <a href="./Register.php">Create an account</a>
-      <a class="d-block" href="" data-bs-toggle="modal" data-bs-target="#forgotpwd" >Forgot password?</a>
+      <div class="text-center">
+        
+        <a href="./Register.php">Create an account</a>
+        <a class="d-block" href="" data-bs-toggle="modal" data-bs-target="#forgotpwd" >Forgot password?</a>
+      </div>
     </div>
     <div class="card-footer text-muted">
       It's free!

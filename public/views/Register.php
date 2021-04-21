@@ -8,8 +8,8 @@ $layout->PrintHeaderNonAuth();
 Alert::PrintAlert('registerMessage');
 ?>
 
-<div class="col-md-6 mt-5 mx-auto">
-   <div class="card">
+<div class="col-md-6 col-xl-4 mt-5 mx-auto">
+   <div class="card shadow">
       <div class="card-header">
          <span class="fw-bold fs-2">Register</span>
       </div>

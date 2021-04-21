@@ -52,7 +52,7 @@ $friends = $friendsService->TryGetFriendsById($currentUser->id_user);
 </main>
 
 
-<div class="position-fixed bottom-0 end-0 me-3 p-2 border border-info rounded">
+<div class="position-fixed shadow bottom-0 end-0 me-3 p-2 border border-info rounded">
   <h4 class="lead text-secondary fw-bolder">Add a new friend</h4>
   <form action="../../app/controllers/friends/AddFriend.php" method="POST">
     <div class="input-group mb-4">
@@ -70,7 +70,7 @@ $friends = $friendsService->TryGetFriendsById($currentUser->id_user);
         <li class="list-group-item">
           <a href=<?= '../../app/controllers/friends/RemoveFriend.php?id=' .  $friend->id_user?> ><i class="text-danger bi bi-trash-fill"></i></a> 
           <?= $friend->first_name?> <?= $friend->last_name?> 
-          <strong class="d-block text-gray-dark">@<?= $friend->username?></strong>  
+          <strong class="d-block text-secondary">@<?= $friend->username?></strong>  
         </li>
       </ul>
     <?php endforeach?>
