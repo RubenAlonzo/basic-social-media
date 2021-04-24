@@ -22,9 +22,9 @@ $requests = $friendService->GetPendingRequests($currentUser->id_user);
 </div>
 
 <?php if($requests):?>
-  <?php foreach($requests as $request):?>
   <ul class="p-3 list-group list-group-flush">
-    <li class="row shadow rounded list-group-item d-flex mb-3 border border-success mb-3 col-md-4">
+  <?php foreach($requests as $request):?>
+    <li class="row shadow rounded list-group-item d-flex border border-success mb-3 col-md-4">
       <div class="col">
         <i class="bi bi-people-fill text-primary"></i>
         <?= $request->first_name?> <?= $request->last_name?>
@@ -43,8 +43,8 @@ $requests = $friendService->GetPendingRequests($currentUser->id_user);
         </form>
       </div>
     </li>
-  </ul>
   <?php endforeach?>
+  </ul>
 <?php else:?>
 <h5 class="lead my-5"><i class="bi bi-exclamation-diamond"></i>
 You don't have any pending requests</h5>
