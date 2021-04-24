@@ -15,7 +15,7 @@ $( document ).ready(function() {
     let action = $(this).data("action");
     let page = $(this).data("page");
     let proceedDeleting = confirm("Are you sure you want to delete it?");
-    if(proceedDeleting && id) window.location.href = "../../app/controllers/home/" + action + ".php?id=" + id + "&page=" + page;
+    if(proceedDeleting && id) window.location.href = "../../app/controllers/" + action + ".php?id=" + id + "&page=" + page;
   }); 
 });
 

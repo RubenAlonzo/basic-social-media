@@ -68,7 +68,7 @@ $friends = $friendsService->TryGetFriendsById($currentUser->id_user);
     <?php foreach($friends as $friend):?>
       <ul class="list-group">
         <li class="list-group-item">
-          <a href=<?= '../../app/controllers/friends/RemoveFriend.php?id=' .  $friend->id_user?> ><i class="text-danger bi bi-trash-fill"></i></a> 
+          <a href='javascript:void(0)' data-id='<?= $friend->id_user?>' data-page='' data-action='friends/RemoveFriend' class='text-danger me-2 link-delete'><i class="text-danger bi bi-trash-fill"></i></a>
           <?= $friend->first_name?> <?= $friend->last_name?> 
           <strong class="d-block text-secondary">@<?= $friend->username?></strong>  
         </li>
