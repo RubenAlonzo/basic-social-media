@@ -29,6 +29,7 @@ $friends = $friendsService->TryGetFriendsById($currentUser->id_user);
             <div class="modal-body">
               <input type="hidden" id="postid" name="postid" value="">
               <input type="hidden" id="parentid" name="parentid" value="">
+              <input type="hidden" id="page" name="page" value="">
               <textarea class="form-control mb-3" rows="4" placeholder="Leave a comment here" name="textresponse"></textarea>
               <input class="form-control form-control-sm mb-3" name="photoresponse" accept=".jpg,.png,.jpeg" type="file">
               </div>
@@ -47,10 +48,9 @@ $friends = $friendsService->TryGetFriendsById($currentUser->id_user);
       <h4 class="pb-2 mb-0">Look what your friends are doing</h4>
   </div>
 
-  <?php $posts->PrintPosts($currentUser, 'Friends')?>
+  <?php $posts->PrintFriendPosts($currentUser, 'Friends')?>
 
 </main>
-
 
 <div class="position-fixed shadow bottom-0 end-0 me-3 p-2 border border-info rounded">
   <h4 class="lead text-secondary fw-bolder">Add a new friend</h4>

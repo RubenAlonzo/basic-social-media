@@ -29,6 +29,7 @@ $currentUser = $_SESSION['auth'];
             <div class="modal-body">
               <input type="hidden" id="postid" name="postid" value="">
               <input type="hidden" id="parentid" name="parentid" value="">
+              <input type="hidden" id="page" name="page" value="">
               <textarea class="form-control mb-3" rows="4" placeholder="Leave a comment here" name="textresponse"></textarea>
               <input class="form-control form-control-sm mb-3" name="photoresponse" accept=".jpg,.png,.jpeg" type="file">
               </div>

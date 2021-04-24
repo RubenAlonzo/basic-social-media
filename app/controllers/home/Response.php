@@ -49,7 +49,7 @@ if((trim($_POST['textresponse']) || $_FILES['photoresponse']['error'] != 4)
 else{
   $_SESSION['homeMessage'] = ['No content', 'warning'];
 }
-if(isset($_GET['page'])) 
-  header("Location: ../../../public/views/". $_GET['page'] . ".php");
+if(isset($_POST['page'])) 
+  header("Location: ../../../public/views/". $_POST['page'] . ".php");
 else
   header('Location: ../../../public/views/home.php');

@@ -24,8 +24,6 @@ class FriendModelService extends ModelServiceBase{
       $friendId = ($row['id_user_one'] == $id) ? $row['id_user_two'] : $row['id_user_one'];
       array_push($friendIdList, $friendId);
     }
-
-
     return $friendIdList;
   }
 

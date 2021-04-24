@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/abstract/ModelServiceBase.php';
+require_once __DIR__ . '/FriendModelService.php';
 require_once __DIR__ . '../../../Utilities/Utils.php';
 require_once __DIR__ . '../../../database/Config.php';
 
@@ -38,6 +39,45 @@ class PostModelService extends ModelServiceBase{
     }
 
     return $postList;
+  }
+
+  public function GetListFromFriendsByUserId($id){
+
+    $friendService = new FriendModelService();
+    $friendIds = $friendService->GetFriendsIdByUserId($id);
+    $conditions = $this->ComposeCondition($friendIds, 'post.id_user', '=', 'or');
+
+    if(!$conditions) return array();
+
+    $query = $this->db->prepare(
+      "SELECT * FROM user INNER JOIN post ON user.id_user = post.id_user
+      WHERE ({$conditions}) ORDER BY post.time_stamp DESC;") 
+      or trigger_error($query->error, E_USER_WARNING);
+
+    $query->execute() or trigger_error($query->error, E_USER_WARNING);
+    $result = $query->get_result();
+    $query->close();
+
+    if($result->num_rows === 0) return null;
+
+    $postList = array();
+    while ($row = $result->fetch_object()) {
+      array_push($postList, $row);
+    }
+
+    return $postList;
+  }
+
+  private function ComposeCondition($idList, $field, $condition, $conjunction){
+    $conditions = '';
+    foreach($idList as $id){
+      if(end($idList) != $id)
+        $conditions .= "{$field} {$condition} {$id} {$conjunction} ";
+      else
+        $conditions .= "{$field} {$condition} {$id}";
+    }
+
+    return$conditions;
   }
 
   public function TryGetValuesById($postId){
