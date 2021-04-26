@@ -2,17 +2,17 @@
 require_once __DIR__ . '/../../public/shared/Layout.php';
 require_once __DIR__ . '/../../public/shared/Alert.php';
 require_once __DIR__ . '/../../app/Utilities/authorization.php';
-require_once __DIR__ . '/../../app/services/models/FriendModelService.php';
+require_once __DIR__ . '/../../app/services/models/EventModelService.php';
 
 Authorization::Authorize();
 $layout = new Layout();
-$friendService = new FriendModelService();
+$eventService = new EventModelService();
 $layout->PrintHead();
 $layout->PrintHeaderAuth('events');
+Alert::PrintAlert('eventInvitationMessage');
 $layout->PrintEventsTabs('invitations');
-Alert::PrintAlert('notificationMessage');
 $currentUser = $_SESSION['auth'];
-$requests = $friendService->GetPendingRequests($currentUser->id_user);
+$invitations = $eventService->GetEventInvitations($currentUser->id_user);
 ?>
 
 <main class="container-lefted mt-5">
@@ -21,37 +21,49 @@ $requests = $friendService->GetPendingRequests($currentUser->id_user);
   <h4 class="pb-2 mb-0">Friend's invitations to events</h4>
 </div>
 
-<ul class="list-group p-3 col-md-8 list-group-flush">
+<?php if($invitations):?>
 
-  <li class="row shadow rounded list-group-item d-flex mb-3 border mb-3 col-md-8">
-    <div class="col">
-      <i class="bi bi-calendar-event text-primary"></i>
-      <span>15/07/2021 15:00</span> <small class="text-danger ms-3">Expired</small>
-      <strong class="d-block text-secondary">International Seminar on Pedagogical Approaches</strong>
-      <span class="d-block fst-italic text-secondary">Fort Lauderdale, Florida</span>
-      <small class="d-block text-secondary">12 people invited</small>
+  <ul class="list-group p-3 col-md-8 list-group-flush">
+    <?php foreach($invitations as $event):?>
+      <?php if(Utils::IsDateAfterNow($event->date)):?>
+        <?php $invitation = $eventService->GetInvitation($event->id_event, $currentUser->id_user)?>
+        <li class="row shadow rounded list-group-item d-flex mb-3 border mb-3 col-md-8">
+          <div class="col">
+            <i class="bi bi-calendar-event text-primary"></i>
+            <span><?= $event->date?></span> 
+            <strong class="d-block text-secondary"><?= $event->title?></strong>
+            <span class="d-block fst-italic text-secondary"><?= $event->place?></span>
+            <small class="d-block text-secondary mt-1"><?php echo count($eventService->GetInvitationsToEvent($event->id_event))?> people invited</small>
 
-      <form action="" class="mt-3">
-        <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1">
-          <label class="form-check-label text-primary fw-bold" for="inlineRadio1">Interested</label>
+            <form action="../../app/controllers/eventInvitations/SendInvitationResponse.php" method="POST" class="mt-3">
+              <input hidden name='idInvitation' value='<?= $invitation->id_invitation?>'>
+              
+              <div class="form-check form-check-inline my-2">
+                <input class="form-check-input" type="radio" <?php if($invitation->status == 1) echo 'checked'?>  name='<?= 'radio_' . $invitation->id_invitation?>' id='<?= 'radio1_' . $invitation->id_invitation?>' value="1">
+                <label class="form-check-label text-primary fw-bold" for='<?= 'radio1_' . $invitation->id_invitation?>'>Interested</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio"<?php if($invitation->status == 2) echo 'checked'?>  name='<?= 'radio_' . $invitation->id_invitation?>' id='<?= 'radio2_' . $invitation->id_invitation?>' value="2">
+                <label class="form-check-label text-success fw-bold"  for='<?= 'radio2_' . $invitation->id_invitation?>'>Going</label>
+              </div>
+              <div class="form-check form-check-inline">
+                <input class="form-check-input" type="radio" <?php if($invitation->status == 3) echo 'checked'?>  name='<?= 'radio_' . $invitation->id_invitation?>' id='<?= 'radio3_' . $invitation->id_invitation?>' value="3">
+                <label class="form-check-label text-danger fw-bold" for='<?= 'radio3_' . $invitation->id_invitation?>'>Can't make it</label>
+              </div>  
+        
+              <button type="submit" class="btn btn-secondary btn-sm">Send response</button>
+            </form>
+
           </div>
-          <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2">
-          <label class="form-check-label text-success fw-bold" for="inlineRadio2">Going</label>
-          </div>
-          <div class="form-check form-check-inline">
-          <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3">
-          <label class="form-check-label text-danger fw-bold" for="inlineRadio3">Can't make it</label>
-        </div>   
-        <button type="submit" class="btn btn-secondary btn-sm">Send response</button>
-      </form>
+        </li>
+      <?php endif?>
+    <?php endforeach?>
 
-    </div>
-  </li>
-
-</ul>
-
+  </ul>
+<?php else:?>
+  <h5 class="lead my-5"><i class="bi bi-exclamation-diamond"></i>
+    No event invitations</h5>
+<?php endif?>
 </main>
 
 

@@ -26,7 +26,7 @@ abstract class ModelServiceBase{
     }
   }
 
-  protected function TryGetValueById($fieldSearching, $id, $table, $refCol){
+  protected function TryGetRowById($fieldSearching, $table, $refCol, $id){
     $query = $this->db->prepare(
       "SELECT {$fieldSearching} FROM {$table} WHERE {$refCol} = ? LIMIT 1") 
       or trigger_error($query->error, E_USER_WARNING);
@@ -39,9 +39,10 @@ abstract class ModelServiceBase{
 
     if($result->num_rows === 0) return null;
 
-    if ($row = $result->fetch_array()) {
-      return $row[$fieldSearching];
+    if ($row = $result->fetch_object()) {
+      return $row;
     }
+    
     return null;
   }
 

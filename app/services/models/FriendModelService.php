@@ -90,6 +90,14 @@ class FriendModelService extends ModelServiceBase{
     return false;
   }
 
+  public function AreFriends($currentUserId, $otherUserId){
+    if($currentUserId == $otherUserId) return false;
+    $friendList = $this->GetFriendsIdByUserId($currentUserId);
+    $areFriends = array_search($otherUserId, $friendList);
+    return ($areFriends === false) ?  false : true;
+  } 
+
+
   public function SendFriendRequest($sender, $receiver){
     $order = Utils::SortOrder($sender, $receiver);
     

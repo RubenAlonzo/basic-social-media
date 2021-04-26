@@ -64,4 +64,8 @@ class Utils{
     }
     return implode('', $pieces);
   }
+
+  public static function IsDateAfterNow($date){
+    return (strtotime($date) > strtotime('now')) ? true : false;
+  }
 }
