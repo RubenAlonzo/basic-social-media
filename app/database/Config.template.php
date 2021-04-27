@@ -13,6 +13,9 @@ define("IMG_PROFILE_PATH" , __DIR__ . '/../../public/assets/img/profile');
 
 // Set up constant below according to your enviroment
 
+// ROOT_URL example http://localhost/basic-social-media-master
+define("ROOT_URL", "{your base root url without / at the end}");
+
 define("DB_USER" , "{your database user}");
 define("DB_PASSWORD" , "{your database user password}");
 

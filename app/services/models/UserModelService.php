@@ -2,6 +2,7 @@
 require_once __DIR__ . '/abstract/ModelServiceBase.php';
 require_once __DIR__ . '../../../Utilities/Utils.php';
 require_once __DIR__ . '../../../services/MailService.php';
+require_once __DIR__ . '../../../database/Config.php';
 
 class UserModelService extends ModelServiceBase{
  
@@ -91,7 +92,7 @@ class UserModelService extends ModelServiceBase{
     if(!$result) return false;
 
     $mailer = new MailService();
-    $mailer->SendMail($email, 'Password reset', "<p>Use this password from now and on: <strong>{$pwd}</strong> <br /> <a href='http://localhost/basic-social-media/public/views/login.php'>Back to login</a></p>");
+    $mailer->SendMail($email, 'Password reset', "<p>Use this password from now and on: <strong>{$pwd}</strong> <br /> <a href='". ROOT_URL ."/public/views/login.php'>Back to login</a></p>");
 
     return true;  
   }

@@ -46,7 +46,7 @@ if(trim($_POST['firstName'])
       $result = $userModelService->Create($FirstName, $LastName, $Phone, $Email, $Username, $Password,$profileName, $IsEmailConfirmed, $hash);
       if($result){
         $mailer = new MailService();
-        $mailer->SendMail($Email, 'Email confirmation', "<p>Follow this link to confirm your account <a href='http://localhost/basic-social-media/app/controllers/account/ConfirmEmail.php?username={$Username}&hash={$hash}'>Link</a></p>");
+        $mailer->SendMail($Email, 'Email confirmation', "<p>Follow this link to confirm your account <a href='". ROOT_URL ."/app/controllers/account/ConfirmEmail.php?username={$Username}&hash={$hash}'>Link</a></p>");
         $_SESSION['loginMessage'] = ['Account created successfully!', 'success'];
         header('Location: ../../../public/views/login.php');
       }

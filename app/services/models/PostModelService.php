@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/abstract/ModelServiceBase.php';
 require_once __DIR__ . '/FriendModelService.php';
+require_once __DIR__ . '/ResponseModelService.php';
 require_once __DIR__ . '../../../Utilities/Utils.php';
 require_once __DIR__ . '../../../database/Config.php';
 
@@ -96,6 +97,14 @@ class PostModelService extends ModelServiceBase{
   }
 
   public function DeletePost($postId){
+
+    $responseService = new ResponseModelService();
+    $replies = $responseService->GetReplies($postId, 0);
+    if($replies){
+      foreach($replies as $reply){
+        $responseService->DeleteReply($reply->id_reply);
+      }
+    }
 
     $this->RemoveImage($postId, 'post', 'id_post');
 
