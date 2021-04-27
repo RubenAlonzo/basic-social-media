@@ -22,13 +22,13 @@ class Replier{
     $replies = $this->responseService->GetReplies($postId, $parentId);
 
     foreach($replies as $reply){
-
+      $date = date("F j, Y, g:i a", strtotime($reply->time_stamp));
       $replyer = $this->userService->TryGetById($reply->id_user);
       if(!$replyer) return null;
 
 echo <<<EOF
       <div class="ms-5 mt-4">
-      <small class="float-end lead fs-6">{$reply->time_stamp}</small>
+      <small class="float-end lead fs-6">{$date}</small>
       <div class="d-flex text-muted pt-3 col-md-10">
       <img src='{$this->directoryUp}assets/img/profile/{$replyer->profile_pic}' width="40px" height="40px" style="border-radius: 50%; margin-right: 1%" alt="img">
       <p class="pb-3 mb-0 small lh-sm ">

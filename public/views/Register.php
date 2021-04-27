@@ -50,7 +50,7 @@ Alert::PrintAlert('registerMessage');
                   </div>
                   <div class="mb-3">
                      <label for="password" class="form-label">Password</label>
-                     <input type="password" class="form-control" name="password" required>
+                     <input type="password" minlength="6" class="form-control" name="password" required>
                   </div>
                   <div class="mb-3">
                      <label for="confirmPassword" class="form-label">Confirm password</label>

@@ -60,7 +60,7 @@ $myEvents = $eventService->GetMyEvents($currentUser->id_user);
     <li class="row shadow rounded list-group-item d-flex mb-3 border mb-3 col-md-8">
       <div class="col">
         <i class="bi bi-calendar-event text-primary"></i>
-        <span><?= $event->date?></span> 
+        <span><?= date("F j, Y, g:i a", strtotime($event->date))?></span> 
           <?php if(Utils::IsDateAfterNow($event->date)):?>
             <small class="text-success fw-bold ms-3">Active</small>
           <?php else:?>

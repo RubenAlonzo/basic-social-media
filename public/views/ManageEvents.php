@@ -40,7 +40,7 @@ $actualEvent = $eventService->GetEventById($idEvent);
 
       <div class="mb-3 p-3 bg-body rounded shadow">
         <i class="bi bi-calendar-event text-primary"></i>
-        <span><?= $actualEvent->date?></span> 
+        <span><?= date("F j, Y, g:i a", strtotime($actualEvent->date))?></span> 
           <?php if(Utils::IsDateAfterNow($actualEvent->date)):?>
               <small class="text-success fw-bold ms-3">Active</small>
           <?php else:?>

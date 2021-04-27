@@ -30,7 +30,7 @@ $invitations = $eventService->GetEventInvitations($currentUser->id_user);
         <li class="row shadow rounded list-group-item d-flex mb-3 border mb-3 col-md-8">
           <div class="col">
             <i class="bi bi-calendar-event text-primary"></i>
-            <span><?= $event->date?></span> 
+            <span><?= date("F j, Y, g:i a", strtotime($event->date))?></span> 
             <strong class="d-block text-secondary"><?= $event->title?></strong>
             <span class="d-block fst-italic text-secondary"><?= $event->place?></span>
             <small class="d-block text-secondary mt-1"><?php echo count($eventService->GetInvitationsToEvent($event->id_event))?> people invited</small>
